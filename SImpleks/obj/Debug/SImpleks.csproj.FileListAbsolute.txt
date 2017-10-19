@@ -1,0 +1,6 @@
+c:\users\андрей\documents\visual studio 2015\Projects\MMDO\SImpleks\bin\Debug\SImpleks.exe.config
+c:\users\андрей\documents\visual studio 2015\Projects\MMDO\SImpleks\bin\Debug\SImpleks.exe
+c:\users\андрей\documents\visual studio 2015\Projects\MMDO\SImpleks\bin\Debug\SImpleks.pdb
+c:\users\андрей\documents\visual studio 2015\Projects\MMDO\SImpleks\obj\Debug\SImpleks.csprojResolveAssemblyReference.cache
+c:\users\андрей\documents\visual studio 2015\Projects\MMDO\SImpleks\obj\Debug\SImpleks.exe
+c:\users\андрей\documents\visual studio 2015\Projects\MMDO\SImpleks\obj\Debug\SImpleks.pdb
