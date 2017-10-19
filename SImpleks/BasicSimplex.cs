@@ -9,6 +9,16 @@ namespace SImpleks
     abstract class BasicSimplex
     {
 
+        /// <summary>
+        /// transition to a new basis
+        /// </summary>
+        /// <returns></returns>
+        public abstract Fraction[] GetNewBasis();
+
+
+
+
+
       
     }
 }

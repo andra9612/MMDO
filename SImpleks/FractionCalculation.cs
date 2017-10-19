@@ -9,14 +9,18 @@ namespace SImpleks
     class FractionCalculation
     {
 
-        
-        // add few fractions 
-        
-        public static Fraction Add(params Fraction[] fractions)
+
+        /// <summary>
+        /// method of  calculating the  sum of the several fractions
+        /// </summary>
+        /// <param name="fractions"></param>
+        /// <returns> to return a  new fraction. The sum of all fractions</returns>
+
+        public static Fraction Plus(params Fraction[] fractions)
         {
             FractionCalculation calculation = new FractionCalculation();
 
-            Fraction commonFraction = new Fraction(0,1);
+            Fraction commonFraction = new Fraction(0, 1);
 
             fractions = calculation.MakeACommonDenumerator(fractions);
 
@@ -31,8 +35,58 @@ namespace SImpleks
             return commonFraction;
 
         }
-        //make common denumerator
-        private Fraction[] MakeACommonDenumerator(  Fraction[] fractions)
+
+        /// <summary>
+        /// method division is division few fractions.  Ferst fraction in array is divided by other 
+        /// </summary>
+        /// <param name="fractions"></param>
+        /// <returns> return fraction after division</returns>
+        public static Fraction Division(params Fraction[] fractions)
+        {
+            FractionCalculation calculation = new FractionCalculation();
+
+            Fraction result = fractions[0];
+
+            for (int i = 1; i < fractions.Length; i++)
+            {
+                result.Numerator *= fractions[i].Denumerator;
+                result.Denumerator *= fractions[i].Numerator;
+            }
+
+            result = calculation.CutDown(result);
+
+            return result;
+
+        }
+
+        /// <summary>
+        /// the method multiplies several fractions
+        /// </summary>
+        /// <param name="fractions"> array of  fractions</param>
+        /// <returns>returns the multiplication result</returns>
+        public static Fraction Multiple(params Fraction[] fractions)
+        {
+            FractionCalculation calculation = new FractionCalculation();
+
+            Fraction result = new Fraction(1, 1);
+
+            for (int i = 0; i < fractions.Length; i++)
+            {
+                result.Numerator *= fractions[i].Numerator;
+                result.Denumerator *= fractions[i].Denumerator;
+            }
+
+            result = calculation.CutDown(result);
+
+            return result;
+        }
+
+        /// <summary>
+        /// method make a common denumerator
+        /// </summary>
+        /// <param name="fractions">array of fractions</param>
+        /// <returns>return array of fractions with common denumerator</returns>
+        private Fraction[] MakeACommonDenumerator(Fraction[] fractions)
         {
             Fraction maxFraction;
 
@@ -65,7 +119,12 @@ namespace SImpleks
             return fractions;
         }
 
-        //create new fraction with new common denumerator
+        /// <summary>
+        /// create new fraction with new common denumerator
+        /// </summary>
+        /// <param name="commonDenumerator"> common denumerator for this fraction </param>
+        /// <param name="fraction">some fraction</param>
+        /// <returns> return a new fraction with common denumerator</returns>
         private Fraction newFraction(int commonDenumerator, Fraction fraction)
         {
             int multiplier = 0;
@@ -76,7 +135,12 @@ namespace SImpleks
 
             return fraction;
         }
-        //find common multiplier for case when cannot find commondenumerator
+
+        /// <summary>
+        /// this method finds  multiplie of  denumerators when it is  imposible to find common denumerator
+        /// </summary>
+        /// <param name="fractions">array of fractions</param>
+        /// <returns>return common denumerator</returns>
         private int GetCommonMultiplier(Fraction[] fractions)
         {
             int commonMultiplier = 1;
@@ -90,7 +154,14 @@ namespace SImpleks
         }
 
 
-        //check thst we can divide max denumerator with variable  denumerator for making commondenumerator
+        /// <summary>
+        /// this method check that we can divide maxdenumerator on other denumerators or not
+        /// </summary>
+        /// <param name="maxFraction">fraction with max denumerator</param>
+        /// <param name="fractions">array of  fractions</param>
+        /// <returns>return true if we can  divide max fraction denumerator by other fractions denumerators
+        ///  or false if we cannot divide
+        /// </returns>
         private bool CheckDividing(Fraction maxFraction, Fraction[] fractions)
         {
             int counter = 0;
@@ -108,7 +179,11 @@ namespace SImpleks
         }
 
 
-        // find max denumerator
+        /// <summary>
+        /// this method find maximum denumerator
+        /// </summary>
+        /// <param name="fractions"> array of  fractions</param>
+        /// <returns> return max denumerator</returns>
         private Fraction MaxDenumerator(Fraction[] fractions)
         {
             Fraction maxFraction = new Fraction(1, int.MinValue);
@@ -123,6 +198,11 @@ namespace SImpleks
         }
 
         // cut down denumerator and numerator  by  the same number
+        /// <summary>
+        /// this method cut down denmerator and numerator by the same number
+        /// </summary>
+        /// <param name="fraction">some fraction</param>
+        /// <returns> return result of catting down</returns>
         private Fraction CutDown(Fraction fraction)
         {
             int max = 1;
@@ -136,7 +216,7 @@ namespace SImpleks
 
             fraction.Denumerator /= max;
             fraction.Numerator /= max;
-            return fraction; 
+            return fraction;
         }
     }
 }
