@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SImpleks
 {
-    class BinarySimplexMethod : BasicSimplex
+    sealed class BinarySimplexMethod : BasicSimplex
     {
         public override Fraction[] GetNewBasis()
         {

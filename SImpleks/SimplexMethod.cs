@@ -6,19 +6,17 @@ using System.Threading.Tasks;
 
 namespace SImpleks
 {
-    class SimplexMethod : BasicSimplex
+    sealed class SimplexMethod : BasicSimplex
     {
 
-        private Fraction[] functionFx;
+        public  void CalculateSimlexMethod(Fraction[] functionFx, Fraction[,] limits, Fraction[] freeMembers)
+        {
+            InBasis = FindBasis(limits);
+            Marks = CalculateMarks(limits, freeMembers, functionFx);
 
-        private Fraction[] marks;
-
-        private Fraction[,] limits;
-
-        private Fraction[] freeMembers;
+        }
 
 
-        
         public override Fraction[] GetNewBasis()
         {
             throw new NotImplementedException();

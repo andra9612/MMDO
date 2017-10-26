@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SImpleks
 {
-    class Fraction
+    class Fraction: FractionCalculation
     {
 
 
@@ -25,6 +25,13 @@ namespace SImpleks
             }
         }
 
+        public static explicit operator Fraction(int v)
+        {
+           return new Fraction(v);
+        }
+
+   
+
         public int Denumerator
         {
             get
@@ -42,6 +49,69 @@ namespace SImpleks
         {
             this.numerator = numerator;
             this.denumerator = denumerator;
+        }
+
+        public Fraction()
+        {
+            numerator = 1;
+            denumerator = 1;
+        }
+
+        public Fraction(int value)
+        {
+            numerator = value;
+            denumerator = 1;
+        }
+
+
+        public static Fraction operator +(Fraction first, Fraction second)
+        {
+            Fraction result = new Fraction();
+            MakeACommonDenumerator(ref first, ref second);
+            result.denumerator = first.denumerator;
+
+            result.numerator = first.numerator + second.numerator;
+
+            result = CutDown(result);
+            return result;
+
+        }
+
+        public static Fraction operator  -(Fraction first ,Fraction second)
+        {
+            Fraction result = new Fraction();
+            MakeACommonDenumerator(ref first, ref second);
+            result.denumerator = first.denumerator;
+
+            result.numerator = first.numerator - second.numerator;
+
+            result = CutDown(result);
+            return result;
+        }
+
+        public static Fraction operator *(Fraction first, Fraction second)
+        {
+            Fraction result = new Fraction();
+
+            result.numerator = first.numerator * second.numerator;
+            result.denumerator = second.denumerator * first.denumerator;
+
+            result = CutDown(result);
+
+            return result;
+        }
+
+        public static Fraction operator /(Fraction first, Fraction second)
+        {
+            Fraction result = new Fraction();
+
+            result.numerator = first.numerator * second.denumerator;
+            result.denumerator = first.denumerator * second.numerator;
+
+            result = CutDown(result);
+
+            return result;
+
         }
     }
 }
