@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SImpleks
 {
-    class Fraction: FractionCalculation
+    class Fraction : FractionCalculation
     {
-
+        public static Fraction zero = new Fraction(0, 1);
 
         private int numerator;
         private int denumerator;
@@ -27,10 +27,10 @@ namespace SImpleks
 
         public static explicit operator Fraction(int v)
         {
-           return new Fraction(v);
+            return new Fraction(v);
         }
 
-   
+
 
         public int Denumerator
         {
@@ -77,7 +77,7 @@ namespace SImpleks
 
         }
 
-        public static Fraction operator  -(Fraction first ,Fraction second)
+        public static Fraction operator -(Fraction first, Fraction second)
         {
             Fraction result = new Fraction();
             MakeACommonDenumerator(ref first, ref second);
@@ -113,5 +113,42 @@ namespace SImpleks
             return result;
 
         }
+
+        public static bool operator <(Fraction first, Fraction second)
+        {
+            MakeACommonDenumerator(ref first, ref second);
+
+            if (first.numerator < second.numerator)
+                return true;
+
+            return false;
+        }
+
+        public static bool operator >(Fraction first, Fraction second)
+        {
+            MakeACommonDenumerator(ref first, ref second);
+
+            if (first.numerator > second.numerator)
+                return true;
+
+            return false;
+        }
+
+        public static bool operator ==(Fraction first, Fraction second)
+        {
+            if (first.numerator == second.numerator)
+                return true;
+
+            return false;
+        }
+
+        public static bool operator !=(Fraction first, Fraction second)
+        {
+            if (first.numerator != second.numerator)
+                return true;
+
+            return false;
+        }
+
     }
 }

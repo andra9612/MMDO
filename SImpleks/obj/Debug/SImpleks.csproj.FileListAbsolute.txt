@@ -10,3 +10,9 @@ C:\UpWork\MMDO\SImpleks\obj\Debug\SImpleks.pdb
 C:\UpWork\MMDO\SImpleks\bin\Debug\SImpleks.exe
 C:\UpWork\MMDO\SImpleks\bin\Debug\SImpleks.pdb
 C:\UpWork\MMDO\SImpleks\obj\Debug\SImpleks.csprojResolveAssemblyReference.cache
+D:\MMDO-master\SImpleks\bin\Debug\SImpleks.exe.config
+D:\MMDO-master\SImpleks\obj\Debug\SImpleks.exe
+D:\MMDO-master\SImpleks\obj\Debug\SImpleks.pdb
+D:\MMDO-master\SImpleks\obj\Debug\SImpleks.csprojResolveAssemblyReference.cache
+D:\MMDO-master\SImpleks\bin\Debug\SImpleks.exe
+D:\MMDO-master\SImpleks\bin\Debug\SImpleks.pdb

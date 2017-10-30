@@ -18,11 +18,11 @@ namespace SImpleks
 
         private Fraction[] freeMembers;
 
-        private Fraction[] inBsis;
+        private int[] inBsis;
 
 
 
-        public Fraction[] InBasis { get; set; }
+        public int[] InBasis { get; set; }
 
         public Fraction[] FunctionFx { get; set; }
 
@@ -33,22 +33,26 @@ namespace SImpleks
         public Fraction[] FreeMembers { get; set; }
 
 
-        protected Fraction[] FindBasis(Fraction[,] limits)
+        protected int[] FindBasis(Fraction[,] limits)
         {
             int counter = 0;
 
-            for (int j = 0; j < limits.GetLength(1); j++)
+            for (int i = 0; i < limits.GetLength(1); i++)
             {
-                for (int i= 0; i < limits.GetLength(0); i++)
+                for (int j = 0; j < limits.GetLength(0); j++)
                 {
-                    if (limits[i, j] == (Fraction)0)
+                    if (limits[j, i] == Fraction.zero)
+                    {
                         counter++;
+                    }
                 }
 
-                if (counter == limits.GetLength(1) - 1)
-                    InBasis[j] = limits[j, 0];
-                    counter = 0;
+                if (counter == limits.GetLength(0) - 1)
+                    inBsis[i] = i;
+
+                counter = 0;
             }
+
 
             return InBasis;
         }
