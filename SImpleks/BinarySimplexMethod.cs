@@ -8,7 +8,7 @@ namespace SImpleks
 {
     sealed class BinarySimplexMethod : BasicSimplex
     {
-        public override Fraction[] GetNewBasis()
+        public override Fraction[,] GetNewBasis(Fraction[,] limits, Fraction[] freeMembers, Fraction[] functionFx, Fraction[] marks, int[] InBasis)
         {
             throw new NotImplementedException();
         }
