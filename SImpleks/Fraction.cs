@@ -136,6 +136,9 @@ namespace SImpleks
 
         public static bool operator ==(Fraction first, Fraction second)
         {
+            MakeACommonDenumerator(ref first, ref second);
+
+
             if (first.numerator == second.numerator)
                 return true;
 
@@ -144,13 +147,37 @@ namespace SImpleks
 
         public static bool operator !=(Fraction first, Fraction second)
         {
+            MakeACommonDenumerator(ref first, ref second);
+
             if (first.numerator != second.numerator)
                 return true;
 
             return false;
         }
 
-      
+
+        public static bool operator <=(Fraction first, Fraction second)
+        {
+            MakeACommonDenumerator(ref first, ref second);
+
+            if (first.numerator <= second.numerator)
+                return true;
+
+            return false;
+        }
+
+
+        public static bool operator >=(Fraction first, Fraction second)
+        {
+            MakeACommonDenumerator(ref first, ref second);
+
+            if (first.numerator >= second.numerator)
+                return true;
+
+            return false;
+        }
+
+
 
     }
 }

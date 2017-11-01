@@ -18,23 +18,36 @@ namespace SImpleks
         {
             int[] InBasis = FindBasis(limits);
             Fraction[] marks = CalculateMarks(limits, freeMembers, functionFx, InBasis);
-            limits = GetNewBasis(limits, freeMembers, functionFx, marks, InBasis);
-
-
+            GetNewBasis(ref limits, ref freeMembers, ref functionFx, ref marks, ref InBasis);
         }
 
-        public override Fraction[,] GetNewBasis(Fraction[,] limits, Fraction[] freeMembers, Fraction[] functionFx, Fraction[] marks, int[] InBasis)
+        public override void GetNewBasis(ref Fraction[,] limits, ref Fraction[] freeMembers, ref Fraction[] functionFx, ref Fraction[] marks, ref int[] InBasis)
         {
             int columnIndex = 0;
             int rowIndex = 0;
-
-            Fraction[,] newLimits = new Fraction[limits.GetLength(0), limits.GetLength(1)];
 
             columnIndex = GetMaximumMark(marks);
 
             rowIndex = GetminElementToFreeMember(limits, freeMembers, columnIndex);
 
-            return newLimits;
+            CalculateTheSystem(ref limits, ref marks, ref freeMembers, rowIndex, columnIndex);
+
+
+        }
+
+
+        private int CheckExitCondition(Fraction[,] limits ,  Fraction[] marks)
+        {
+            int result = 0;
+
+            for (int i = 0; i < marks.Length; i++)
+            {
+                ///if(marks[i] <= Fraction.zero)
+
+            }
+
+            return result;
+
         }
 
 
