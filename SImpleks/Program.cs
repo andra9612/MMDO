@@ -12,14 +12,14 @@ namespace SImpleks
         {
             Fraction[,] limits =
             {
-                {(Fraction)2, (Fraction)(-1), (Fraction)0, (Fraction)(-2), (Fraction)1, (Fraction)0 },
-                {(Fraction)3, (Fraction)2, (Fraction)1, (Fraction)(-3), (Fraction)0, (Fraction)0 },
-                {(Fraction)(-1), (Fraction)(-3), (Fraction)0, (Fraction)1, (Fraction)0, (Fraction)1 }
+                {(Fraction)1, (Fraction)(-2), (Fraction)3, (Fraction)(-4), (Fraction)0, (Fraction)0, (Fraction)1},
+                {(Fraction)3, (Fraction)(-1), (Fraction)(-1), (Fraction)2, (Fraction)1, (Fraction)0, (Fraction)0},
+                {(Fraction)1, (Fraction)5, (Fraction)1, (Fraction)3, (Fraction)0, (Fraction)1, (Fraction)0}
             };
 
             int[] a = new int[4] { 1, 2, 3, 4 };
 
-            Fraction[] freeMembers = { (Fraction)16, (Fraction)18, (Fraction)24 };
+            Fraction[] freeMembers = { (Fraction)4, (Fraction)3, (Fraction)4 };
 
             Fraction[] functionFx = { (Fraction)2, (Fraction)3, (Fraction)0, (Fraction)(-1), (Fraction)0, (Fraction)0 };
 
