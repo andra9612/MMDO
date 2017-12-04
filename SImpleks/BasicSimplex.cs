@@ -21,6 +21,7 @@ namespace SImpleks
         {
             int counter = 0;
             int basisCounter = 0;
+            bool isOne = false;
 
             int[] InBasis = new int[limits.GetLength(0)];
 
@@ -32,12 +33,15 @@ namespace SImpleks
                     {
                         counter++;
                     }
+                    else if (limits[j, i] == Fraction.one && isOne == false)
+                        isOne = true;
                 }
 
-                if (counter == limits.GetLength(0) - 1)
+                if (counter == limits.GetLength(0) - 1 && isOne)
                 {
                     InBasis[basisCounter] = i;
                     basisCounter++;
+                    isOne = false;
                 }
 
                 counter = 0;
@@ -87,14 +91,14 @@ namespace SImpleks
         /// <param name="freeMembers">array of free members</param>
         /// <param name="rowIndex">row index of chosen element</param>
         /// <param name="columnIndex">column index  of chosen element</param>
-        protected void CalculateTheSystem(ref Fraction[,] limits, ref Fraction[] marks, ref Fraction[] freeMembers, int rowIndex, int columnIndex)
+        protected void CalculateTheSystem(ref Fraction[,] limits, ref Fraction[] marks, ref Fraction[] freeMembers, int rowIndex, int columnIndex, ref Fraction Fx)
         {
             Fraction divider = limits[rowIndex, columnIndex];
 
             limits = RecalculateChosenRow(limits, rowIndex, divider);
             freeMembers = RecalculateFreeMembers(limits, freeMembers, divider, rowIndex, columnIndex);
             limits = RecalculateLimits(limits, columnIndex, rowIndex);
-            marks = RecalculateMarks(limits, marks, rowIndex, columnIndex);
+            marks = RecalculateMarks(limits, marks, rowIndex, columnIndex, ref Fx, freeMembers);
         }
 
 
@@ -118,7 +122,7 @@ namespace SImpleks
             for (int i = 0; i < limits.GetLength(0); i++)
             {
                 if (i != rowIndex)
-                    freeMembers[i] = freeMembers[i] + freeMembers[rowIndex] * limits[i, columnIndex];
+                    freeMembers[i] = freeMembers[i] + (freeMembers[rowIndex] * limits[i, columnIndex] * (Fraction)(-1));
             }
 
             return freeMembers;
@@ -133,12 +137,17 @@ namespace SImpleks
         /// <param name="rowIndex"> row index of chosen element</param>
         /// <param name="columnIndex">column index of chosen element</param>
         /// <returns>return array of recalculating marks</returns>
-        private Fraction[] RecalculateMarks(Fraction[,] limits, Fraction[] marks, int rowIndex, int columnIndex)
+        private Fraction[] RecalculateMarks(Fraction[,] limits, Fraction[] marks, int rowIndex, int columnIndex, ref Fraction Fx, Fraction[] freeMembers)
         {
+
+            Fraction divider = marks[columnIndex];
+
             for (int i = 0; i < limits.GetLength(1); i++)
             {
-                marks[i] = marks[i] + limits[rowIndex, i] * marks[columnIndex];
+                marks[i] = marks[i] + limits[rowIndex, i] * divider * (Fraction)(-1);
             }
+
+            Fx = Fx + freeMembers[rowIndex] * divider * (Fraction)(-1);
 
             return marks;
         }
@@ -158,7 +167,7 @@ namespace SImpleks
 
             for (int i = 0; i < limits.GetLength(0); i++)
             {
-                multiplier = limits[i, columnIndex];
+                multiplier = limits[i, columnIndex] * (Fraction)(-1);
 
                 for (int j = 0; j < limits.GetLength(1); j++)
                 {
@@ -201,9 +210,20 @@ namespace SImpleks
         /// <param name="marks">array of the marks</param>
         /// <param name="InBasis">array of indexes that  belong to basis</param>
         /// <returns></returns>
-        public abstract void GetNewBasis(ref Fraction[,] limits, ref Fraction[] freeMembers, ref Fraction[] functionFx, ref Fraction[] marks, ref int[] InBasis);
-     }
+        public abstract void GetNewBasis(ref Fraction[,] limits, ref Fraction[] freeMembers, ref Fraction[] functionFx, ref Fraction[] marks, ref int[] InBasis, ref Fraction Fx);
 
+        protected Fraction FindBasicFx(Fraction[] functionFx, Fraction[] freeMembers, int[] InBasis)
+        {
+            Fraction Fx = Fraction.zero;
 
+            for (int i = 0; i < freeMembers.Length; i++)
+            {
+                Fx = Fx + freeMembers[i] * functionFx[InBasis[i]];
+            }
+
+            return Fx;
+        }
+
+    }
 
 }

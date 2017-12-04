@@ -16,12 +16,36 @@ namespace SImpleks
         /// <param name="freeMembers">free members  of limits</param>
         public void CalculateSimlexMethod(Fraction[] functionFx, Fraction[,] limits, Fraction[] freeMembers)
         {
+            bool isEnd = false;
             int[] InBasis = FindBasis(limits);
-            Fraction[] marks = CalculateMarks(limits, freeMembers, functionFx, InBasis);
-            GetNewBasis(ref limits, ref freeMembers, ref functionFx, ref marks, ref InBasis);
-        }
+            Fraction[] marks;
+            Fraction Fx;
+            marks = CalculateMarks(limits, freeMembers, functionFx, InBasis);
+            Fx = FindBasicFx(functionFx, freeMembers, InBasis);
 
-        public override void GetNewBasis(ref Fraction[,] limits, ref Fraction[] freeMembers, ref Fraction[] functionFx, ref Fraction[] marks, ref int[] InBasis)
+            do
+            {
+                //InBasis = FindBasis(limits);
+
+                GetNewBasis(ref limits, ref freeMembers, ref functionFx, ref marks, ref InBasis, ref Fx);
+                InBasis = FindBasis(limits);
+                // Fx = FindBasicFx(functionFx, freeMembers, InBasis);
+
+                isEnd = CheckExitCondition(limits, marks);
+
+            } while (!isEnd);
+
+        }
+        /// <summary>
+        /// this method calculate new basis and recalculate all system
+        /// </summary>
+        /// <param name="limits">matrix of limits</param>
+        /// <param name="freeMembers">array of free members</param>
+        /// <param name="functionFx"> array  of elements of  target function </param>
+        /// <param name="marks">array of marks</param>
+        /// <param name="InBasis">int  array of indexes of basis values</param>
+        /// <param name="Fx">value of  functionFx</param>
+        public override void GetNewBasis(ref Fraction[,] limits, ref Fraction[] freeMembers, ref Fraction[] functionFx, ref Fraction[] marks, ref int[] InBasis, ref Fraction Fx)
         {
             int columnIndex = 0;
             int rowIndex = 0;
@@ -30,25 +54,95 @@ namespace SImpleks
 
             rowIndex = GetminElementToFreeMember(limits, freeMembers, columnIndex);
 
-            CalculateTheSystem(ref limits, ref marks, ref freeMembers, rowIndex, columnIndex);
+            CalculateTheSystem(ref limits, ref marks, ref freeMembers, rowIndex, columnIndex, ref Fx);
 
 
         }
 
-
-        private int CheckExitCondition(Fraction[,] limits ,  Fraction[] marks)
+        /// <summary>
+        /// this method check 2  things for exit
+        /// </summary>
+        /// <param name="limits">matrix of limits</param>
+        /// <param name="marks"> array of marks</param>
+        /// <returns> return true or false. Thst means we need continue calculation or not</returns>
+        private bool CheckExitCondition(Fraction[,] limits, Fraction[] marks)
         {
             int result = 0;
+            bool isEnd = false;
+
+
+            result = CheckNegativeMarks(marks);
+            if (result == 0)
+                result = CheckNegativeValuesUnderTheMarks(limits, marks);
+
+            switch (result)
+            {
+                case 0:
+                    isEnd = false;
+                    break;
+                case 1:
+                    isEnd = true;
+                    break;
+                case 2:
+                    isEnd = true;
+                    break;
+            }
+
+            return isEnd;
+
+        }
+
+        /// <summary>
+        /// this method check   there are negative elements under the  mark
+        /// </summary>
+        /// <param name="limits">matrix of limits</param>
+        /// <param name="marks"> array of marks</param>
+        /// <returns>return the int value/ This value means that under positive mark we has negative limits</returns>
+        private int CheckNegativeValuesUnderTheMarks(Fraction[,] limits, Fraction[] marks)
+        {
+            int counter = 0;
 
             for (int i = 0; i < marks.Length; i++)
             {
-                ///if(marks[i] <= Fraction.zero)
+                if (marks[i] > Fraction.zero)
+                {
+                    for (int j = 0; j < limits.GetLength(0); j++)
+                    {
+                        if (limits[j, i] <= Fraction.zero)
+                            counter++;
+                    }
+                }
 
+                if (counter == 2)
+                    return 2;
+                counter = 0;
             }
 
-            return result;
-
+            return 0;
         }
+
+
+        /// <summary>
+        /// this method check  there are all marks is negative or not
+        /// </summary>
+        /// <param name="marks">array of marks</param>
+        /// <returns>return the int value. This value is means that all marks are  negative or zero</returns>
+        private int CheckNegativeMarks(Fraction[] marks)
+        {
+            int counter = 0;
+
+            for (int i = 0; i < marks.Length; i++)
+            {
+                if (marks[i] <= Fraction.zero)
+                    counter++;
+            }
+
+            if (counter == marks.Length)
+                return 1;
+
+            return 0;
+        }
+
 
 
         /// <summary>
@@ -67,13 +161,17 @@ namespace SImpleks
 
             for (int i = 0; i < limits.GetLength(0); i++)
             {
-                intermediateValue = freeMembers[i] / limits[i, index];
-
-                if (intermediateValue < minValue)
+                if (limits[i, index] > Fraction.zero)
                 {
-                    minValue = intermediateValue;
-                    minIndex = i;
+                    intermediateValue = freeMembers[i] / limits[i, index];
+
+                    if (intermediateValue < minValue)
+                    {
+                        minValue = intermediateValue;
+                        minIndex = i;
+                    }
                 }
+
             }
 
             return minIndex;

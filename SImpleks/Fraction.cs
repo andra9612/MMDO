@@ -9,6 +9,7 @@ namespace SImpleks
     class Fraction : FractionCalculation
     {
         public static Fraction zero = new Fraction(0, 1);
+        public static Fraction one = new Fraction(1, 1);
 
         private int numerator;
         private int denumerator;
@@ -107,6 +108,12 @@ namespace SImpleks
 
             result.numerator = first.numerator * second.denumerator;
             result.denumerator = first.denumerator * second.numerator;
+
+            if(result.denumerator < 0)
+            {
+                result.denumerator *= -1;
+                result.numerator *= -1;
+            }
 
             result = CutDown(result);
 
