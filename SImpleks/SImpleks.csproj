@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicGomory.cs" />
     <Compile Include="BasicSimplex.cs" />
     <Compile Include="BinarySimplexMethod.cs" />
+    <Compile Include="FirstGomory.cs" />
     <Compile Include="Fraction.cs" />
     <Compile Include="FractionCalculation.cs" />
     <Compile Include="Program.cs" />
