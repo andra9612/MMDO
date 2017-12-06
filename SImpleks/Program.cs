@@ -10,7 +10,7 @@ namespace SImpleks
     {
         static void Main(string[] args)
         {
-
+            
             //Fraction[,] limits =
             //{
             //    { (Fraction)(-1), (Fraction)1, (Fraction)1, (Fraction)0, (Fraction)0},
