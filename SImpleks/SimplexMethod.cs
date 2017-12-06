@@ -14,7 +14,7 @@ namespace SImpleks
         /// <param name="functionFx"> elements of objective function</param>
         /// <param name="limits"> matrix element f limits</param>
         /// <param name="freeMembers">free members  of limits</param>
-        public Tuple<Fraction[], Fraction[], int[]> CalculateSimlexMethod( ref Fraction[] functionFx, ref  Fraction[,] limits, ref Fraction[] freeMembers)
+        public Tuple<Fraction[], Fraction, int[]> CalculateSimlexMethod( ref Fraction[] functionFx, ref  Fraction[,] limits, ref Fraction[] freeMembers)
         {
             bool isEnd = false;
             int[] InBasis = FindBasis(limits);
@@ -35,7 +35,7 @@ namespace SImpleks
 
             } while (!isEnd);
 
-            return Tuple.Create(marks, functionFx, InBasis);
+            return Tuple.Create(marks, Fx, InBasis);
         }
         /// <summary>
         /// this method calculate new basis and recalculate all system
@@ -155,7 +155,7 @@ namespace SImpleks
         /// <returns>return index of minimum relation of limits to free members</returns>
         private int GetminElementToFreeMember(Fraction[,] limits, Fraction[] freeMembers, int index)
         {
-            Fraction minValue = new Fraction(int.MaxValue, 1);
+            Fraction minValue = new Fraction(1000, 1);
             Fraction intermediateValue = Fraction.zero;
 
             int minIndex = 0;

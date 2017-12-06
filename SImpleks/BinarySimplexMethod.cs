@@ -9,14 +9,15 @@ namespace SImpleks
     sealed class BinarySimplexMethod : BasicSimplex
     {
 
-        public void CalculateBinarySimplexMethod(Fraction[] functionFx, Fraction[,] limits, Fraction[] freeMembers)
+        public Tuple<Fraction[], Fraction, int[], Fraction[,], Fraction[]> CalculateBinarySimplexMethod(ref Fraction[] functionFx, Fraction[,] limits, Fraction[] freeMembers, Fraction[] marks)
         {
+            
             bool isEnd = false;
             int[] InBasis = FindBasis(limits);
-            Fraction[] marks;
-            Fraction Fx;
-            marks = CalculateMarks(limits, freeMembers, functionFx, InBasis);
-            Fx = FindBasicFx(functionFx, freeMembers, InBasis);
+            //Fraction[] marks;
+            Fraction Fx = Fraction.one;
+            //marks = CalculateMarks(limits, freeMembers, functionFx, InBasis);
+           // Fx = FindBasicFx(functionFx, freeMembers, InBasis);
             do
             {
                 //InBasis = FindBasis(limits);
@@ -28,6 +29,9 @@ namespace SImpleks
                 isEnd = CheckExitCondition(limits, marks, freeMembers);
 
             } while (!isEnd);
+
+
+            return Tuple.Create( marks, Fx, InBasis,limits,freeMembers);
         }
 
         private bool CheckExitCondition(Fraction[,] limits, Fraction[] marks, Fraction[] freeMembers)
