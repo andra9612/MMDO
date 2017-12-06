@@ -11,7 +11,6 @@ namespace SImpleks
 
 
 
-
         /// <summary>
         /// tis method find basis variables
         /// </summary>

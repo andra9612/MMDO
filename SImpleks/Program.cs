@@ -10,16 +10,21 @@ namespace SImpleks
     {
         static void Main(string[] args)
         {
-            //Fraction[,] limits =
-            //{
-            //    { (Fraction)(-1), (Fraction)1, (Fraction)1, (Fraction)0, (Fraction)0},
-            //    {(Fraction)(-1), (Fraction)3, (Fraction)0, (Fraction)1, (Fraction)0},
-            //     {(Fraction)5, (Fraction)1, (Fraction)0, (Fraction)0, (Fraction)1}
-            //};
 
-            //Fraction[] freeMembers = { (Fraction)2, (Fraction)10, (Fraction)30 };
+            Fraction[,] limits =
+            {
+                { (Fraction)(-1), (Fraction)1, (Fraction)1, (Fraction)0, (Fraction)0},
+                {(Fraction)(-1), (Fraction)3, (Fraction)0, (Fraction)1, (Fraction)0},
+                 {(Fraction)5, (Fraction)1, (Fraction)0, (Fraction)0, (Fraction)1}
+            };
 
-            //Fraction[] functionFx = { (Fraction)10, (Fraction)(-15), (Fraction)0, (Fraction)0, (Fraction)0 };
+            Fraction[] freeMembers = { (Fraction)2, (Fraction)10, (Fraction)30 };
+
+            Fraction[] functionFx = { (Fraction)10, (Fraction)(-15), (Fraction)0, (Fraction)0, (Fraction)0 };
+
+            FirstGomory gomory = new FirstGomory();
+
+            gomory.CalculateFirstGomory(limits, freeMembers, functionFx,2);
 
             //SimplexMethod sm = new SimplexMethod();
 
@@ -40,7 +45,7 @@ namespace SImpleks
 
             //   bs.CalculateBinarySimplexMethod(functionFx,limits,freeMembers);
 
-            Fraction first = new Fraction(-3, 2);
+            Fraction first = new Fraction(-7, 11);
             Fraction result = first.GetFloatPart();
 
 

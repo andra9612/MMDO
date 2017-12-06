@@ -190,19 +190,15 @@ namespace SImpleks
             Fraction value = new Fraction(numerator, denumerator);
             int integerPart = 0;
 
-
-            integerPart = numerator % denumerator;
-            if (integerPart < 0)
+            integerPart = numerator / denumerator;
+            if (value < zero)
                 integerPart -= 1;
             result = new Fraction(integerPart);
 
             result = value - result;
 
             return result;
-
         }
-
-
 
     }
 }

@@ -14,7 +14,7 @@ namespace SImpleks
         /// <param name="functionFx"> elements of objective function</param>
         /// <param name="limits"> matrix element f limits</param>
         /// <param name="freeMembers">free members  of limits</param>
-        public void CalculateSimlexMethod(Fraction[] functionFx, Fraction[,] limits, Fraction[] freeMembers)
+        public Tuple<Fraction[], Fraction[], int[]> CalculateSimlexMethod( ref Fraction[] functionFx, ref  Fraction[,] limits, ref Fraction[] freeMembers)
         {
             bool isEnd = false;
             int[] InBasis = FindBasis(limits);
@@ -35,6 +35,7 @@ namespace SImpleks
 
             } while (!isEnd);
 
+            return Tuple.Create(marks, functionFx, InBasis);
         }
         /// <summary>
         /// this method calculate new basis and recalculate all system
