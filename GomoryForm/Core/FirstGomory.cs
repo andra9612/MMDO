@@ -14,12 +14,12 @@ namespace SImpleks
 
 
 
-        public void CalculateFirstGomory(Fraction[,] limits, Fraction[] freeMembers, Fraction[] functionFx, int integerValue)
+        public Tuple<Fraction[,], Fraction[], Fraction[], Fraction> CalculateFirstGomory(Fraction[,] limits, Fraction[] freeMembers, Fraction[] functionFx, int integerValue)
         {
             int mainRowIndex = 0;
             bool isEnd = false;
             int counter = 0;
-
+            Fraction Fx = Fraction.zero;
             var myTuple = simplex.CalculateSimlexMethod(ref functionFx, ref limits, ref freeMembers);
 
             Fraction[,] newLimits = new Fraction[limits.GetLength(0), limits.GetLength(1)];
@@ -33,7 +33,7 @@ namespace SImpleks
                 {
                     mainRowIndex = GetIndexOfMainRow(freeMembers, myTuple.Item3, limits, integerValue);
                     var resize = GetNewCut(limits, myTuple.Item1, freeMembers, mainRowIndex);
-
+                    Fx = myTuple.Item2;
                     newLimits = new Fraction[newLimits.GetLength(0) + 1, newLimits.GetLength(1) + 1];
                     newFreeMembers = new Fraction[newFreeMembers.Length + 1];
                     newMarks = new Fraction[newMarks.Length + 1];
@@ -54,12 +54,13 @@ namespace SImpleks
                     newMarks = resize.Item3;
                 }
 
-                var binari = biSimplex.CalculateBinarySimplexMethod(ref functionFx, newLimits, newFreeMembers, newMarks);
+                var binari = biSimplex.CalculateBinarySimplexMethod(ref functionFx, newLimits, newFreeMembers, newMarks,Fx);
 
                 newLimits = binari.Item4;
                 newFreeMembers = binari.Item5;
                 newMarks = binari.Item1;
                 newInBasis = binari.Item3;
+                Fx = binari.Item2;
 
                 newLimits = CutLimits(newLimits);
                 newFreeMembers = CutOther(newFreeMembers);
@@ -71,6 +72,8 @@ namespace SImpleks
             } while (!isEnd);
 
 
+
+            return Tuple.Create(newLimits, newFreeMembers,newMarks, Fx);
         }
 
         private Fraction[] CutOther(Fraction[] other)

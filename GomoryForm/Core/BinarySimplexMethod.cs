@@ -10,7 +10,7 @@ namespace SImpleks
      class BinarySimplexMethod : BasicSimplex
     {
 
-        public Tuple<Fraction[], Fraction, int[], Fraction[,], Fraction[]> CalculateBinarySimplexMethod(ref Fraction[] functionFx, Fraction[,] limits, Fraction[] freeMembers, Fraction[] marks)
+        public Tuple<Fraction[], Fraction, int[], Fraction[,], Fraction[]> CalculateBinarySimplexMethod(ref Fraction[] functionFx, Fraction[,] limits, Fraction[] freeMembers, Fraction[] marks, Fraction Fx)
         {
             
             bool isEnd = false;
@@ -18,7 +18,7 @@ namespace SImpleks
             //int[] InBasis = GetBas(limits);
             //int[] InBasis = GetBas(limits);
             //Fraction[] marks;
-            Fraction Fx = Fraction.one;
+            //Fraction Fx = Fraction.one;
             //marks = CalculateMarks(limits, freeMembers, functionFx, InBasis);
            // Fx = FindBasicFx(functionFx, freeMembers, InBasis);
             do

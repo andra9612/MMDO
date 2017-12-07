@@ -109,7 +109,7 @@ namespace SImpleks
             result.numerator = first.numerator * second.denumerator;
             result.denumerator = first.denumerator * second.numerator;
 
-            if(result.denumerator < 0)
+            if (result.denumerator < 0)
             {
                 result.denumerator *= -1;
                 result.numerator *= -1;
@@ -198,6 +198,15 @@ namespace SImpleks
             result = value - result;
 
             return result;
+        }
+
+        public new string ToString()
+        {
+            string value = string.Empty;
+
+            value = numerator + "/" + denumerator;
+
+            return value;
         }
 
     }

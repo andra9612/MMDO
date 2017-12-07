@@ -19,7 +19,7 @@ namespace GomoryForm.Core
             {
                 for (int j = 0; j < limits.GetLength(1); j++)
                 {
-                    limits[i,j].Parse(limitsBox[i,j].Text);
+                    limits[i, j] = new Fraction(limitsBox[i,j].Text);
                 }
             }
 
@@ -33,7 +33,7 @@ namespace GomoryForm.Core
 
             for (int i = 0; i < functionFx.Length; i++)
             {
-                functionFx[i].Parse(functionFxBox[i].Text);
+                functionFx[i] = new Fraction(functionFxBox[i].Text);
             }
 
             return functionFx;

@@ -32,8 +32,10 @@
             this.limitsCount = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.countOfInteger = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.variablesCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.limitsCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.countOfInteger)).BeginInit();
             this.SuspendLayout();
             // 
             // variablesCount
@@ -90,11 +92,29 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // countOfInteger
+            // 
+            this.countOfInteger.Location = new System.Drawing.Point(382, 26);
+            this.countOfInteger.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.countOfInteger.Name = "countOfInteger";
+            this.countOfInteger.Size = new System.Drawing.Size(50, 20);
+            this.countOfInteger.TabIndex = 4;
+            this.countOfInteger.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(513, 366);
+            this.Controls.Add(this.countOfInteger);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.limitsCount);
@@ -103,6 +123,7 @@
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.variablesCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.limitsCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.countOfInteger)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -113,6 +134,7 @@
         private System.Windows.Forms.NumericUpDown limitsCount;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.NumericUpDown countOfInteger;
     }
 }
 

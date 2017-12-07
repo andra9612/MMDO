@@ -64,6 +64,24 @@ namespace SImpleks
             denumerator = 1;
         }
 
+        public Fraction(string value)
+        {
+
+            string[] common = new string[2];
+            common = value.Split('/');
+            if (common.Length > 1)
+            {
+                numerator = Convert.ToInt32(common[0]);
+                denumerator = Convert.ToInt32(common[1]);
+            }
+            else
+            {
+                numerator = Convert.ToInt32(common[0]);
+                denumerator = 1;
+
+            }
+        }
+
 
         public static Fraction operator +(Fraction first, Fraction second)
         {

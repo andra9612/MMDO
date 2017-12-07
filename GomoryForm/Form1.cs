@@ -77,7 +77,7 @@ namespace GomoryForm
 
         private void ClearControl()
         {
-            while (Controls.Count > 4)
+            while (Controls.Count > 5)
             {
                 foreach (Control x in this.Controls)
                 {
@@ -94,17 +94,17 @@ namespace GomoryForm
         private void button2_Click(object sender, EventArgs e)
         {
 
-            Fraction[,] limits =
-  {
-                          { (Fraction)4, (Fraction)1, (Fraction)1, (Fraction)0},
-                          {(Fraction)(-2), (Fraction)1, (Fraction)0, (Fraction)1}
-                      };
+            //          Fraction[,] limits =
+            //{
+            //                                  { (Fraction)4, (Fraction)1, (Fraction)1, (Fraction)0},
+            //                                  {(Fraction)(-2), (Fraction)1, (Fraction)0, (Fraction)1}
+            //                              };
 
-            Fraction[] freeMembers = { (Fraction)6, (Fraction)4 };
+            //          Fraction[] freeMembers = { (Fraction)6, (Fraction)4 };
 
-            Fraction[] functionFx = { (Fraction)(-1), (Fraction)1, (Fraction)0, (Fraction)0 };
+            //          Fraction[] functionFx = { (Fraction)(-1), (Fraction)1, (Fraction)0, (Fraction)0 };
 
-            FirstGomory gomory = new FirstGomory();
+            //          FirstGomory gomory = new FirstGomory();
 
 
             //            Fraction[,] limits =
@@ -119,9 +119,65 @@ namespace GomoryForm
 
             //            FirstGomory gomory = new FirstGomory();
 
-            gomory.CalculateFirstGomory(limits, freeMembers, functionFx, 2);
+            // var gom = gomory.CalculateFirstGomory(limits, freeMembers, functionFx, 2);
+             var gom = gomory.CalculateFirstGomory(Core.TextBoxParser.TexBoxToLimits(limitBoxes), Core.TextBoxParser.TextBoxToFunctionFx(freeMembersBoxes), Core.TextBoxParser.TextBoxToFunctionFx(FunctionFx), (int)countOfInteger.Value);
 
-            //gomory.CalculateFirstGomory(Core.TextBoxParser.TexBoxToLimits(limitBoxes), Core.TextBoxParser.TextBoxToFunctionFx(freeMembersBoxes), Core.TextBoxParser.TextBoxToFunctionFx(FunctionFx),2);
+            DrawTable(gom.Item1, gom.Item2, gom.Item3, gom.Item4);
+
+
         }
+
+        private void DrawTable(Fraction[,] limits, Fraction[] freeMembers, Fraction[] marks, Fraction fx)
+        {
+
+            Point lastPoint = new Point(0, 0);
+
+            ClearControl();
+            Label[,] limitLables = new Label[limits.GetLength(0), limits.GetLength(1)];
+            Label[] freeMemberLable = new Label[freeMembers.Length];
+            Label[] markLables = new Label[marks.Length];
+
+            for (int i = 0; i < limitLables.GetLength(0); i++)
+            {
+                for (int j = 0; j < limitLables.GetLength(1); j++)
+                {
+                    limitLables[i, j] = new Label();
+                    limitLables[i, j].Location = new Point(j * 60 + 10, i * 30 + 100);
+                    limitLables[i, j].Size = new Size(50, 20);
+                    limitLables[i, j].Text = limits[i, j].Numerator + "/" + limits[i, j].Denumerator;
+                    Controls.Add(limitLables[i, j]);
+                }
+            }
+
+            lastPoint = limitLables[limitLables.GetLength(0) - 1, limitLables.GetLength(1) - 1].Location;
+
+            for (int i = 0; i < limitLables.GetLength(0); i++)
+            {
+                freeMemberLable[i] = new Label();
+                freeMemberLable[i].Location = new Point(lastPoint.X + 80, i * 30 + 100);
+                freeMemberLable[i].Size = new Size(50, 20);
+                freeMemberLable[i].Text = freeMembers[i].Numerator + "/" + freeMembers[i].Denumerator;
+                Controls.Add(freeMemberLable[i]);
+            }
+
+            for (int i = 0; i < markLables.Length; i++)
+            {
+                markLables[i] = new Label();
+                markLables[i].Location = new Point(i * 60 + 10, lastPoint.Y + 40);
+                markLables[i].Size = new Size(50, 20);
+                markLables[i].Text = marks[i].Numerator + "/" + marks[i].Denumerator;
+                Controls.Add(markLables[i]);
+                if (i == markLables.Length - 1)
+                {
+                    Label lable = new Label();
+                    lable.Location = new Point(lastPoint.X + 75, lastPoint.Y + 40);
+                    lable.Text = fx.Numerator + "/" + fx.Denumerator;
+                    Controls.Add(lable);
+                }
+            }
+
+        }
+
+
     }
 }
