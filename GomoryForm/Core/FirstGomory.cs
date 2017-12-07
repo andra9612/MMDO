@@ -32,7 +32,7 @@ namespace SImpleks
                 if (counter == 0)
                 {
                     mainRowIndex = GetIndexOfMainRow(freeMembers, myTuple.Item3, limits, integerValue);
-                    var resize = GetNewCut(limits, freeMembers, myTuple.Item1, mainRowIndex);
+                    var resize = GetNewCut(limits, myTuple.Item1, freeMembers, mainRowIndex);
 
                     newLimits = new Fraction[newLimits.GetLength(0) + 1, newLimits.GetLength(1) + 1];
                     newFreeMembers = new Fraction[newFreeMembers.Length + 1];
@@ -43,8 +43,8 @@ namespace SImpleks
                 }
                 else
                 {
-                    mainRowIndex = GetIndexOfMainRow(newFreeMembers, newInBasis, newLimits,integerValue);
-                    var resize = GetNewCut(limits, freeMembers, myTuple.Item1, mainRowIndex);
+                    mainRowIndex = GetIndexOfMainRow(newFreeMembers, newInBasis, newLimits, integerValue);
+                    var resize = GetNewCut(newLimits, newMarks, newFreeMembers, mainRowIndex);
 
                     newLimits = new Fraction[newLimits.GetLength(0) + 1, newLimits.GetLength(1) + 1];
                     newFreeMembers = new Fraction[newFreeMembers.Length + 1];
@@ -54,34 +54,66 @@ namespace SImpleks
                     newMarks = resize.Item3;
                 }
 
-                var binari = biSimplex.CalculateBinarySimplexMethod(ref functionFx, newLimits, newFreeMembers,newMarks);
+                var binari = biSimplex.CalculateBinarySimplexMethod(ref functionFx, newLimits, newFreeMembers, newMarks);
 
                 newLimits = binari.Item4;
                 newFreeMembers = binari.Item5;
                 newMarks = binari.Item1;
                 newInBasis = binari.Item3;
 
-                isEnd = CheckExitCondition(newFreeMembers, integerValue);
+                newLimits = CutLimits(newLimits);
+                newFreeMembers = CutOther(newFreeMembers);
+                newMarks = CutOther(newMarks);
+
+                isEnd = CheckExitCondition(newFreeMembers, integerValue, newInBasis);
                 counter++;
 
             } while (!isEnd);
 
 
-
-
         }
 
-        private bool CheckExitCondition(Fraction[] freeMembers, int integerValue)
+        private Fraction[] CutOther(Fraction[] other)
+        {
+            for (int i = 0; i < other.Length; i++)
+            {
+                other[i] = Fraction.CutDown(other[i]);
+            }
+
+            return other;
+        }
+
+
+
+        private Fraction[,] CutLimits(Fraction[,] limits)
+        {
+            for (int i = 0; i < limits.GetLength(0); i++)
+            {
+                for (int j = 0; j < limits.GetLength(1); j++)
+                {
+                    limits[i, j] = Fraction.CutDown(limits[i, j]);
+                }
+            }
+
+            return limits;
+        }
+
+        private bool CheckExitCondition(Fraction[] freeMembers, int integerValue, int[] inBasis)
         {
             int counter = 0;
+            bool isInteger = true;
 
             for (int i = 0; i < freeMembers.Length; i++)
             {
-                if (i <= integerValue && freeMembers[i].GetFloatPart() == Fraction.zero)
+                if (inBasis[i] < integerValue)
+                {
                     counter++;
+                    if (freeMembers[i].GetFloatPart() != Fraction.zero)
+                        isInteger = false;
+                }
             }
 
-            if (counter == integerValue)
+            if (counter <= integerValue  && isInteger == true)
                 return true;
 
             return false;
@@ -154,8 +186,8 @@ namespace SImpleks
             Fraction max = new Fraction(int.MinValue, 1);
             int[] newInBasis = new int[inBasis.Length];
 
-       ///     Array.Copy(inBasis,newInBasis, inBasis.Length);
-          //  newInBasis[newInBasis.Length] =
+            ///     Array.Copy(inBasis,newInBasis, inBasis.Length);
+            //  newInBasis[newInBasis.Length] =
 
 
             for (int i = 0; i < freeMembers.Length; i++)
@@ -182,7 +214,7 @@ namespace SImpleks
             return result;
         }
 
-        protected override Tuple<Fraction[,], Fraction[], Fraction[]> GetNewCut(Fraction[,] limits, Fraction[] freeMembers, Fraction[] marks, int mainRowIndex)
+        protected override Tuple<Fraction[,], Fraction[], Fraction[]> GetNewCut(Fraction[,] limits, Fraction[] marks, Fraction[] freeMembers, int mainRowIndex)
         {
 
             Fraction[,] newLimits = new Fraction[limits.GetLength(0) + 1, limits.GetLength(1) + 1];
@@ -221,7 +253,7 @@ namespace SImpleks
             for (int i = 0; i < newFreeMembers.Length; i++)
             {
                 if (i == freeMembers.Length)
-                    newFreeMembers[i] = freeMembers[mainRow].GetFloatPart() * new Fraction(-1, 1);
+                    newFreeMembers[i] = freeMembers[mainRow].GetFloatPart() * (Fraction)(-1);
                 else
                     newFreeMembers[i] = freeMembers[i];
             }
@@ -243,7 +275,7 @@ namespace SImpleks
                     if (i == limits.GetLength(0) && j != limits.GetLength(1))
                     {
                         //if (j != limits.GetLength(1))
-                        newLimits[i, j] = limits[mainRowIndex, j].GetFloatPart() * (new Fraction(-1, 1));
+                        newLimits[i, j] = limits[mainRowIndex, j].GetFloatPart() * (Fraction)(-1);
 
                     }
 

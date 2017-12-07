@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace SImpleks
 {
-    sealed class BinarySimplexMethod : BasicSimplex
+     class BinarySimplexMethod : BasicSimplex
     {
 
         public Tuple<Fraction[], Fraction, int[], Fraction[,], Fraction[]> CalculateBinarySimplexMethod(ref Fraction[] functionFx, Fraction[,] limits, Fraction[] freeMembers, Fraction[] marks)
@@ -14,6 +15,8 @@ namespace SImpleks
             
             bool isEnd = false;
             int[] InBasis = FindBasis(limits);
+            //int[] InBasis = GetBas(limits);
+            //int[] InBasis = GetBas(limits);
             //Fraction[] marks;
             Fraction Fx = Fraction.one;
             //marks = CalculateMarks(limits, freeMembers, functionFx, InBasis);
@@ -33,6 +36,11 @@ namespace SImpleks
 
             return Tuple.Create( marks, Fx, InBasis,limits,freeMembers);
         }
+
+        //private int[] GetBas(Fraction[,] limits)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         private bool CheckExitCondition(Fraction[,] limits, Fraction[] marks, Fraction[] freeMembers)
         {

@@ -50,6 +50,10 @@ namespace SImpleks
             return InBasis;
         }
 
+     
+
+
+
 
         /// <summary>
         /// this method calculate marks

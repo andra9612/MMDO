@@ -9,9 +9,6 @@ namespace SImpleks
     class FractionCalculation
     {
 
-
-
-
         /// <summary>
         /// method make a common denumerator
         /// </summary>

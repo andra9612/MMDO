@@ -10,7 +10,7 @@ namespace SImpleks
     {
         static void Main(string[] args)
         {
-            
+
             //Fraction[,] limits =
             //{
             //    { (Fraction)(-1), (Fraction)1, (Fraction)1, (Fraction)0, (Fraction)0},
@@ -23,18 +23,18 @@ namespace SImpleks
             //Fraction[] functionFx = { (Fraction)10, (Fraction)(-15), (Fraction)0, (Fraction)0, (Fraction)0 };
 
             Fraction[,] limits =
-{
+        {
                 { (Fraction)(-1), (Fraction)3, (Fraction)1, (Fraction)0},
                 {(Fraction)7, (Fraction)1, (Fraction)0, (Fraction)1}
             };
 
-            Fraction[] freeMembers = { (Fraction)6, (Fraction)35};
+            Fraction[] freeMembers = { (Fraction)6, (Fraction)35 };
 
             Fraction[] functionFx = { (Fraction)(-7), (Fraction)(-9), (Fraction)0, (Fraction)0 };
 
             FirstGomory gomory = new FirstGomory();
 
-            gomory.CalculateFirstGomory(limits, freeMembers, functionFx,2);
+            gomory.CalculateFirstGomory(limits, freeMembers, functionFx, 2);
 
             //SimplexMethod sm = new SimplexMethod();
 

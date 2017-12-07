@@ -18,6 +18,7 @@ namespace SImpleks
         {
             bool isEnd = false;
             int[] InBasis = FindBasis(limits);
+            
             Fraction[] marks;
             Fraction Fx;
             marks = CalculateMarks(limits, freeMembers, functionFx, InBasis);

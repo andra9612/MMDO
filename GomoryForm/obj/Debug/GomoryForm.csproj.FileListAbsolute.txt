@@ -1,9 +1,9 @@
 C:\UpWork\MMDO\GomoryForm\bin\Debug\GomoryForm.exe.config
 C:\UpWork\MMDO\GomoryForm\bin\Debug\GomoryForm.exe
 C:\UpWork\MMDO\GomoryForm\bin\Debug\GomoryForm.pdb
-C:\UpWork\MMDO\GomoryForm\obj\Debug\GomoryForm.csprojResolveAssemblyReference.cache
 C:\UpWork\MMDO\GomoryForm\obj\Debug\GomoryForm.Form1.resources
 C:\UpWork\MMDO\GomoryForm\obj\Debug\GomoryForm.Properties.Resources.resources
 C:\UpWork\MMDO\GomoryForm\obj\Debug\GomoryForm.csproj.GenerateResource.Cache
 C:\UpWork\MMDO\GomoryForm\obj\Debug\GomoryForm.exe
 C:\UpWork\MMDO\GomoryForm\obj\Debug\GomoryForm.pdb
+C:\UpWork\MMDO\GomoryForm\obj\Debug\GomoryForm.csprojResolveAssemblyReference.cache

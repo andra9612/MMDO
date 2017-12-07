@@ -53,6 +53,7 @@
     <Compile Include="Core\Fraction.cs" />
     <Compile Include="Core\FractionCalculation.cs" />
     <Compile Include="Core\SimplexMethod.cs" />
+    <Compile Include="Core\TextBoxParser.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

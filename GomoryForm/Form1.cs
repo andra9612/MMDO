@@ -17,7 +17,7 @@ namespace GomoryForm
         TextBox[,] limitBoxes;
         TextBox[] freeMembersBoxes;
         TextBox[] FunctionFx;
-
+        FirstGomory gomory = new FirstGomory();
 
         public Form1()
         {
@@ -26,9 +26,9 @@ namespace GomoryForm
 
         private void button1_Click(object sender, EventArgs e)
         {
-         
+
             ClearControl();
-         
+
             limitBoxes = new TextBox[(int)limitsCount.Value, (int)variablesCount.Value];
             freeMembersBoxes = new TextBox[(int)limitsCount.Value];
             FunctionFx = new TextBox[(int)variablesCount.Value];
@@ -40,10 +40,10 @@ namespace GomoryForm
                 FunctionFx[i].Location = new Point(i * 60 + 10, 60);
                 FunctionFx[i].Size = new Size(50, 20);
                 Controls.Add(FunctionFx[i]);
-                if (i == FunctionFx.Length-1)
+                if (i == FunctionFx.Length - 1)
                 {
                     Label lable = new Label();
-                    lable.Location = new Point((i + 1 )* 60 + 10, 60);
+                    lable.Location = new Point((i + 1) * 60 + 10, 60);
                     lable.Text = "   ----->    min";
                     Controls.Add(lable);
                 }
@@ -57,13 +57,13 @@ namespace GomoryForm
                 {
                     limitBoxes[i, j] = new TextBox();
                     limitBoxes[i, j].Location = new Point(j * 60 + 10, i * 30 + 100);
-                   
+
                     limitBoxes[i, j].Size = new Size(50, 20);
                     Controls.Add(limitBoxes[i, j]);
                 }
             }
 
-            lastPoint = limitBoxes[limitBoxes.GetLength(0)-1, limitBoxes.GetLength(1)-1].Location;
+            lastPoint = limitBoxes[limitBoxes.GetLength(0) - 1, limitBoxes.GetLength(1) - 1].Location;
 
             for (int i = 0; i < limitBoxes.GetLength(0); i++)
             {
@@ -81,7 +81,7 @@ namespace GomoryForm
             {
                 foreach (Control x in this.Controls)
                 {
-                    if (x is TextBox)
+                    if (x is TextBox || x is Label)
                     {
                         x.Dispose();
                     }
@@ -93,9 +93,35 @@ namespace GomoryForm
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Fraction fr = Fraction.zero;
 
-            fr.Parse("13/5");
+            Fraction[,] limits =
+  {
+                          { (Fraction)4, (Fraction)1, (Fraction)1, (Fraction)0},
+                          {(Fraction)(-2), (Fraction)1, (Fraction)0, (Fraction)1}
+                      };
+
+            Fraction[] freeMembers = { (Fraction)6, (Fraction)4 };
+
+            Fraction[] functionFx = { (Fraction)(-1), (Fraction)1, (Fraction)0, (Fraction)0 };
+
+            FirstGomory gomory = new FirstGomory();
+
+
+            //            Fraction[,] limits =
+            //{
+            //                { (Fraction)(-1), (Fraction)3, (Fraction)1, (Fraction)0},
+            //                {(Fraction)7, (Fraction)1, (Fraction)0, (Fraction)1}
+            //            };
+
+            //            Fraction[] freeMembers = { (Fraction)6, (Fraction)35 };
+
+            //            Fraction[] functionFx = { (Fraction)(-7), (Fraction)(-9), (Fraction)0, (Fraction)0 };
+
+            //            FirstGomory gomory = new FirstGomory();
+
+            gomory.CalculateFirstGomory(limits, freeMembers, functionFx, 2);
+
+            //gomory.CalculateFirstGomory(Core.TextBoxParser.TexBoxToLimits(limitBoxes), Core.TextBoxParser.TextBoxToFunctionFx(freeMembersBoxes), Core.TextBoxParser.TextBoxToFunctionFx(FunctionFx),2);
         }
     }
 }

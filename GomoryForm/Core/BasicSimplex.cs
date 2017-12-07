@@ -72,7 +72,7 @@ namespace SImpleks
 
                 for (int j = 0; j < limits.GetLength(0); j++)
                 {
-                    marks[i] = marks[i] + functionFx[inBasis[j]] * limits[j, i];
+                    marks[i] = marks[i] + (functionFx[inBasis[j]] * limits[j, i]);
                 }
 
                 marks[i] = marks[i] - functionFx[i];
@@ -95,7 +95,8 @@ namespace SImpleks
             Fraction divider = limits[rowIndex, columnIndex];
 
             limits = RecalculateChosenRow(limits, rowIndex, divider);
-            freeMembers = RecalculateFreeMembers(limits, freeMembers, divider, rowIndex, columnIndex);
+            if(divider.Numerator != 0)
+                freeMembers = RecalculateFreeMembers(limits, freeMembers, divider, rowIndex, columnIndex);
             limits = RecalculateLimits(limits, columnIndex, rowIndex);
             marks = RecalculateMarks(limits, marks, rowIndex, columnIndex, ref Fx, freeMembers);
         }
@@ -116,12 +117,14 @@ namespace SImpleks
         {
             Fraction multiplier = Fraction.zero;
 
-            freeMembers[rowIndex] = freeMembers[rowIndex] / divider;
+            // freeMembers[rowIndex] = freeMembers[rowIndex] / divider;
+            freeMembers[rowIndex]  /= divider;
+
 
             for (int i = 0; i < limits.GetLength(0); i++)
             {
                 if (i != rowIndex)
-                    freeMembers[i] = freeMembers[i] + (freeMembers[rowIndex] * limits[i, columnIndex] * (Fraction)(-1));
+                    freeMembers[i] = freeMembers[i] + ((freeMembers[rowIndex] * limits[i, columnIndex]) * (Fraction)(-1));
             }
 
             return freeMembers;
@@ -146,7 +149,7 @@ namespace SImpleks
                 marks[i] = marks[i] + limits[rowIndex, i] * divider * (Fraction)(-1);
             }
 
-            Fx = Fx + freeMembers[rowIndex] * divider * (Fraction)(-1);
+            Fx = Fx + (freeMembers[rowIndex] * divider) * (Fraction)(-1);
 
             return marks;
         }
@@ -167,13 +170,15 @@ namespace SImpleks
             for (int i = 0; i < limits.GetLength(0); i++)
             {
                 multiplier = limits[i, columnIndex] * (Fraction)(-1);
-
-                for (int j = 0; j < limits.GetLength(1); j++)
+                if (multiplier.Numerator != 0)
                 {
-
-                    if (i != rowIndex)
+                    for (int j = 0; j < limits.GetLength(1); j++)
                     {
-                        limits[i, j] = limits[i, j] + limits[rowIndex, j] * multiplier;
+
+                        if (i != rowIndex)
+                        {
+                            limits[i, j] = limits[i, j] + limits[rowIndex, j] * multiplier;
+                        }
                     }
                 }
             }

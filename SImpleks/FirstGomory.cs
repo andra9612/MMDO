@@ -44,7 +44,7 @@ namespace SImpleks
                 else
                 {
                     mainRowIndex = GetIndexOfMainRow(newFreeMembers, newInBasis, newLimits,integerValue);
-                    var resize = GetNewCut(limits, freeMembers, myTuple.Item1, mainRowIndex);
+                    var resize = GetNewCut(newLimits, newFreeMembers, newMarks, mainRowIndex);
 
                     newLimits = new Fraction[newLimits.GetLength(0) + 1, newLimits.GetLength(1) + 1];
                     newFreeMembers = new Fraction[newFreeMembers.Length + 1];
