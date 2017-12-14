@@ -40,7 +40,7 @@
             // 
             // variablesCount
             // 
-            this.variablesCount.Location = new System.Drawing.Point(128, 26);
+            this.variablesCount.Location = new System.Drawing.Point(84, 12);
             this.variablesCount.Minimum = new decimal(new int[] {
             2,
             0,
@@ -57,7 +57,7 @@
             // 
             // limitsCount
             // 
-            this.limitsCount.Location = new System.Drawing.Point(174, 26);
+            this.limitsCount.Location = new System.Drawing.Point(130, 12);
             this.limitsCount.Minimum = new decimal(new int[] {
             2,
             0,
@@ -74,9 +74,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(220, 26);
+            this.button1.Location = new System.Drawing.Point(176, 12);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 20);
+            this.button1.Size = new System.Drawing.Size(88, 20);
             this.button1.TabIndex = 2;
             this.button1.Text = "Згенерувати";
             this.button1.UseVisualStyleBackColor = true;
@@ -84,7 +84,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(301, 26);
+            this.button2.Location = new System.Drawing.Point(270, 12);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 20);
             this.button2.TabIndex = 3;
@@ -94,7 +94,7 @@
             // 
             // countOfInteger
             // 
-            this.countOfInteger.Location = new System.Drawing.Point(382, 26);
+            this.countOfInteger.Location = new System.Drawing.Point(351, 12);
             this.countOfInteger.Minimum = new decimal(new int[] {
             2,
             0,

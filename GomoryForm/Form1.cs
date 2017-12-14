@@ -14,16 +14,21 @@ namespace GomoryForm
     public partial class Form1 : Form
     {
         int count = 0;
+        //ініціалізація зміних
         TextBox[,] limitBoxes;
         TextBox[] freeMembersBoxes;
         TextBox[] FunctionFx;
         FirstGomory gomory = new FirstGomory();
 
+
+        //ініціалізація форми
         public Form1()
         {
             InitializeComponent();
         }
 
+
+        //обрбник події що відбувається пи натискнні на кнопку генерації форми
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -74,14 +79,14 @@ namespace GomoryForm
             }
 
         }
-
+        //метод що очищує форму
         private void ClearControl()
         {
             while (Controls.Count > 5)
             {
                 foreach (Control x in this.Controls)
                 {
-                    if (x is TextBox || x is Label)
+                    if (x is TextBox || x is Label || x is RichTextBox)
                     {
                         x.Dispose();
                     }
@@ -91,45 +96,28 @@ namespace GomoryForm
 
         }
 
+        //обробник події кліку на кнопку яка приймає значення введені в таблицю
         private void button2_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var gom = gomory.CalculateFirstGomory(Core.TextBoxParser.TexBoxToLimits(limitBoxes), Core.TextBoxParser.TextBoxToFunctionFx(freeMembersBoxes), Core.TextBoxParser.TextBoxToFunctionFx(FunctionFx), (int)countOfInteger.Value);
 
-            //          Fraction[,] limits =
-            //{
-            //                                  { (Fraction)4, (Fraction)1, (Fraction)1, (Fraction)0},
-            //                                  {(Fraction)(-2), (Fraction)1, (Fraction)0, (Fraction)1}
-            //                              };
+                DrawTable(gom.Item1, gom.Item2, gom.Item3, gom.Item4, gom.Item5);
 
-            //          Fraction[] freeMembers = { (Fraction)6, (Fraction)4 };
-
-            //          Fraction[] functionFx = { (Fraction)(-1), (Fraction)1, (Fraction)0, (Fraction)0 };
-
-            //          FirstGomory gomory = new FirstGomory();
-
-
-            //            Fraction[,] limits =
-            //{
-            //                { (Fraction)(-1), (Fraction)3, (Fraction)1, (Fraction)0},
-            //                {(Fraction)7, (Fraction)1, (Fraction)0, (Fraction)1}
-            //            };
-
-            //            Fraction[] freeMembers = { (Fraction)6, (Fraction)35 };
-
-            //            Fraction[] functionFx = { (Fraction)(-7), (Fraction)(-9), (Fraction)0, (Fraction)0 };
-
-            //            FirstGomory gomory = new FirstGomory();
-
-            // var gom = gomory.CalculateFirstGomory(limits, freeMembers, functionFx, 2);
-             var gom = gomory.CalculateFirstGomory(Core.TextBoxParser.TexBoxToLimits(limitBoxes), Core.TextBoxParser.TextBoxToFunctionFx(freeMembersBoxes), Core.TextBoxParser.TextBoxToFunctionFx(FunctionFx), (int)countOfInteger.Value);
-
-            DrawTable(gom.Item1, gom.Item2, gom.Item3, gom.Item4);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
 
         }
-
-        private void DrawTable(Fraction[,] limits, Fraction[] freeMembers, Fraction[] marks, Fraction fx)
+        //метод генерує  вихідну таблицю.
+        private void DrawTable(Fraction[,] limits, Fraction[] freeMembers, Fraction[] marks, Fraction fx, int[] inBasis)
         {
-
+            int counter = 0;
+            string end = string.Empty;
             Point lastPoint = new Point(0, 0);
 
             ClearControl();
@@ -175,6 +163,86 @@ namespace GomoryForm
                     Controls.Add(lable);
                 }
             }
+
+            //int temp;
+            //for (int i = 0; i < inBasis.Length - 1; i++)
+            //{
+            //    for (int j = i + 1; j < inBasis.Length; j++)
+            //    {
+            //        if (inBasis[i] > inBasis[j])
+            //        {
+            //            temp = inBasis[i];
+            //            inBasis[i] = inBasis[j];
+            //            inBasis[j] = temp;
+            //        }
+            //    }
+            //}
+
+            //for (int i = inBasis.Length-1; i >= 0; i--)
+            //{
+            //    if(inBasis[i] < (int)countOfInteger.Value)
+            //    {
+            //        end += "(" + freeMembers[inBasis[i]].Numerator + "/" + freeMembers[inBasis[i]].Denumerator + " ";
+            //        counter++;
+            //    }
+
+            //}
+
+            int[] arr = new int[inBasis.Length];
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (inBasis[i] < (int)countOfInteger.Value)
+                    arr[i] = i;
+                else
+                    arr[i] = -1;
+            }
+
+            int temp;
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                for (int j = i + 1; j < arr.Length; j++)
+                {
+                    if (arr[i] > arr[j])
+                    {
+                        temp = arr[i];
+                        arr[i] = arr[j];
+                        arr[j] = temp;
+                    }
+                }
+            }
+
+            for (int i = 0 ; i < inBasis.Length; i++)
+            {
+                if (arr[i]  != -1)
+                {
+                    end += "(" + freeMembers[arr[i]].Numerator + "/" + freeMembers[arr[i]].Denumerator + " ";
+                    counter++;
+                }
+
+            }
+
+
+            if (counter < (int)countOfInteger.Value)
+            {
+                for (int i = 0; i < (int)countOfInteger.Value - counter; i++)
+                {
+                    end += " ; " + 0 + "/" + 0 + " ";
+                }
+            }
+
+            end += " )" +  " F(x) = " + fx.Numerator + "/" + fx.Denumerator;
+
+            RichTextBox rich = new RichTextBox();
+            rich.Location = new Point(10, lastPoint.Y + 70);
+            rich.Size = new Size(200, 50);
+            rich.Text = end;
+            Controls.Add(rich);
+           // richTextBox1.Text = end;
+            //Label lable1 = new Label();
+            //lable1.Location = new Point(lastPoint.X, lastPoint.Y + 70);
+            //lable1.Text = end;
+            //Controls.Add(lable1);
 
         }
 

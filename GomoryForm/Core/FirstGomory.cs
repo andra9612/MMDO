@@ -14,14 +14,14 @@ namespace SImpleks
 
 
 
-        public Tuple<Fraction[,], Fraction[], Fraction[], Fraction> CalculateFirstGomory(Fraction[,] limits, Fraction[] freeMembers, Fraction[] functionFx, int integerValue)
+        public Tuple<Fraction[,], Fraction[], Fraction[], Fraction, int[]> CalculateFirstGomory(Fraction[,] limits, Fraction[] freeMembers, Fraction[] functionFx, int integerValue)
         {
             int mainRowIndex = 0;
             bool isEnd = false;
             int counter = 0;
             Fraction Fx = Fraction.zero;
             var myTuple = simplex.CalculateSimlexMethod(ref functionFx, ref limits, ref freeMembers);
-
+            int[] inBasis;
             Fraction[,] newLimits = new Fraction[limits.GetLength(0), limits.GetLength(1)];
             Fraction[] newFreeMembers = new Fraction[freeMembers.Length];
             Fraction[] newMarks = new Fraction[myTuple.Item1.Length];
@@ -40,6 +40,7 @@ namespace SImpleks
                     newLimits = resize.Item1;
                     newFreeMembers = resize.Item2;
                     newMarks = resize.Item3;
+
                 }
                 else
                 {
@@ -61,7 +62,7 @@ namespace SImpleks
                 newMarks = binari.Item1;
                 newInBasis = binari.Item3;
                 Fx = binari.Item2;
-
+                inBasis = newInBasis;
                 newLimits = CutLimits(newLimits);
                 newFreeMembers = CutOther(newFreeMembers);
                 newMarks = CutOther(newMarks);
@@ -73,7 +74,7 @@ namespace SImpleks
 
 
 
-            return Tuple.Create(newLimits, newFreeMembers,newMarks, Fx);
+            return Tuple.Create(newLimits, newFreeMembers,newMarks, Fx, inBasis);
         }
 
         private Fraction[] CutOther(Fraction[] other)

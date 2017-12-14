@@ -16,39 +16,82 @@ namespace SImpleks
         /// </summary>
         /// <param name="limits"> matrix of limits</param>
         /// <returns> return array  of index basis variables</returns>
+        //protected int[] FindBasis(Fraction[,] limits)
+        //{
+        //    int counter = 0;
+        //    int basisCounter = 0;
+        //    bool isOne = false;
+
+        //    int[] InBasis = new int[limits.GetLength(0)];
+
+        //    for (int i = 0; i < limits.GetLength(1); i++)
+        //    {
+        //        for (int j = 0; j < limits.GetLength(0); j++)
+        //        {
+        //            if (limits[j, i] == Fraction.zero)
+        //            {
+        //                counter++;
+        //            }
+        //            else if (limits[j, i] == Fraction.one && isOne == false)
+        //                isOne = true;
+        //        }
+
+        //        if (counter == limits.GetLength(0) - 1 && isOne)
+        //        {
+        //            InBasis[basisCounter] = i;
+        //            basisCounter++;
+        //            isOne = false;
+        //        }
+
+        //        counter = 0;
+        //    }
+
+
+        //    return InBasis;
+        //}
+
+
         protected int[] FindBasis(Fraction[,] limits)
         {
-            int counter = 0;
             int basisCounter = 0;
-            bool isOne = false;
+            int counter = 0;
+            bool isBasis = false;
 
             int[] InBasis = new int[limits.GetLength(0)];
 
-            for (int i = 0; i < limits.GetLength(1); i++)
+            for (int i = 0; i < limits.GetLength(0); i++)
             {
-                for (int j = 0; j < limits.GetLength(0); j++)
+
+                basisCounter = 0;
+
+                for (int j = 0; j < limits.GetLength(1); j++)
                 {
-                    if (limits[j, i] == Fraction.zero)
+
+                    if (limits[i, j] == Fraction.one)
                     {
-                        counter++;
+                        for (int k = 0; k < limits.GetLength(0); k++)
+                        {
+                            if (limits[k, j] == Fraction.zero)
+                                basisCounter++;
+                        }
+
+                        if (basisCounter == limits.GetLength(0) - 1)
+                        {
+                            isBasis = true;
+                            InBasis[counter] = j;
+                            counter++;
+                            basisCounter = 0;
+                            break;
+                        }
+
                     }
-                    else if (limits[j, i] == Fraction.one && isOne == false)
-                        isOne = true;
-                }
 
-                if (counter == limits.GetLength(0) - 1 && isOne)
-                {
-                    InBasis[basisCounter] = i;
-                    basisCounter++;
-                    isOne = false;
                 }
-
-                counter = 0;
             }
-
 
             return InBasis;
         }
+
 
 
         /// <summary>
@@ -94,11 +137,14 @@ namespace SImpleks
         {
             Fraction divider = limits[rowIndex, columnIndex];
 
-            limits = RecalculateChosenRow(limits, rowIndex, divider);
-            if(divider.Numerator != 0)
+            if (divider.Numerator != 0)
+            {
+                limits = RecalculateChosenRow(limits, rowIndex, divider);
                 freeMembers = RecalculateFreeMembers(limits, freeMembers, divider, rowIndex, columnIndex);
-            limits = RecalculateLimits(limits, columnIndex, rowIndex);
-            marks = RecalculateMarks(limits, marks, rowIndex, columnIndex, ref Fx, freeMembers);
+                limits = RecalculateLimits(limits, columnIndex, rowIndex);
+                marks = RecalculateMarks(limits, marks, rowIndex, columnIndex, ref Fx, freeMembers);
+            }
+           
         }
 
 
@@ -118,7 +164,7 @@ namespace SImpleks
             Fraction multiplier = Fraction.zero;
 
             // freeMembers[rowIndex] = freeMembers[rowIndex] / divider;
-            freeMembers[rowIndex]  /= divider;
+            freeMembers[rowIndex] /= divider;
 
 
             for (int i = 0; i < limits.GetLength(0); i++)

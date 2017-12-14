@@ -9,27 +9,22 @@ namespace SImpleks
     sealed class BinarySimplexMethod : BasicSimplex
     {
 
-        public Tuple<Fraction[], Fraction, int[], Fraction[,], Fraction[]> CalculateBinarySimplexMethod(ref Fraction[] functionFx, Fraction[,] limits, Fraction[] freeMembers, Fraction[] marks)
+        public Tuple<Fraction[], Fraction, int[], Fraction[,], Fraction[]> CalculateBinarySimplexMethod(ref Fraction[] functionFx, Fraction[,] limits, Fraction[] freeMembers)
         {
             
             bool isEnd = false;
             int[] InBasis = FindBasis(limits);
-            //Fraction[] marks;
+            Fraction[] marks;
             Fraction Fx = Fraction.one;
-            //marks = CalculateMarks(limits, freeMembers, functionFx, InBasis);
-           // Fx = FindBasicFx(functionFx, freeMembers, InBasis);
+            marks = CalculateMarks(limits, freeMembers, functionFx, InBasis);
+            Fx = FindBasicFx(functionFx, freeMembers, InBasis);
             do
             {
-                //InBasis = FindBasis(limits);
-
                 GetNewBasis(ref limits, ref freeMembers, ref functionFx, ref marks, ref InBasis, ref Fx);
                 InBasis = FindBasis(limits);
-                // Fx = FindBasicFx(functionFx, freeMembers, InBasis);
-
                 isEnd = CheckExitCondition(limits, marks, freeMembers);
 
             } while (!isEnd);
-
 
             return Tuple.Create( marks, Fx, InBasis,limits,freeMembers);
         }
@@ -38,12 +33,47 @@ namespace SImpleks
         {
             int result = 0;
 
+            result = CheckNegativeLimits(limits, freeMembers);
+            if (result == 2)
+                return true;
+
             result = CheckNegativeValue(freeMembers);
 
             if (result == 1)
                 return true;
 
+         
+
             return false;
+        }
+
+        private int CheckNegativeLimits(Fraction[,] limits, Fraction[] freeMembers)
+        {
+
+            bool isNegative = false;
+
+            for (int i = 0; i < limits.GetLength(0); i++)
+            {
+                if (freeMembers[i] < Fraction.zero)
+                {
+                    isNegative = false;
+                    for (int j = 0; j < limits.GetLength(1); j++)
+                    {
+                        if (limits[i, j] < Fraction.zero)
+                        {
+                            isNegative = true;
+                            break;
+
+                        }
+                    }
+
+                }
+            }
+
+            if (isNegative == false)
+                return 2;
+
+            return 0;
         }
 
         private int CheckNegativeValue(Fraction[] freeMembers)
@@ -99,7 +129,7 @@ namespace SImpleks
 
             for (int i = 0; i < marks.Length; i++)
             {
-                if (marks[i] < Fraction.zero && limits[rowIndex, i] < Fraction.zero)
+                if (marks[i] <= Fraction.zero && limits[rowIndex, i] < Fraction.zero)
                 {
                     divider = marks[i] / limits[rowIndex, i];
                     if (divider < min)

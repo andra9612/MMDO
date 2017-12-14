@@ -12,7 +12,7 @@ namespace SImpleks
         /// Method that makes all calculation in simplex method
         /// </summary>
         /// <param name="functionFx"> elements of objective function</param>
-        /// <param name="limits"> matrix element f limits</param>
+        /// <param name="limits"> matrix element of limits</param>
         /// <param name="freeMembers">free members  of limits</param>
         public Tuple<Fraction[], Fraction, int[]> CalculateSimlexMethod( ref Fraction[] functionFx, ref  Fraction[,] limits, ref Fraction[] freeMembers)
         {

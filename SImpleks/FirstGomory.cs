@@ -54,7 +54,7 @@ namespace SImpleks
                     newMarks = resize.Item3;
                 }
 
-                var binari = biSimplex.CalculateBinarySimplexMethod(ref functionFx, newLimits, newFreeMembers,newMarks);
+                var binari = biSimplex.CalculateBinarySimplexMethod(ref functionFx, newLimits, newFreeMembers);
 
                 newLimits = binari.Item4;
                 newFreeMembers = binari.Item5;

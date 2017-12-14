@@ -26,7 +26,7 @@ namespace SImpleks
                 //InBasis = FindBasis(limits);
 
                 GetNewBasis(ref limits, ref freeMembers, ref functionFx, ref marks, ref InBasis, ref Fx);
-                InBasis = FindBasis(limits);
+                //InBasis = FindBasis(limits);
                 // Fx = FindBasicFx(functionFx, freeMembers, InBasis);
 
                 isEnd = CheckExitCondition(limits, marks, freeMembers);
@@ -45,6 +45,10 @@ namespace SImpleks
         private bool CheckExitCondition(Fraction[,] limits, Fraction[] marks, Fraction[] freeMembers)
         {
             int result = 0;
+            result = CheckNegativeLimits(limits, freeMembers);
+            if (result == 2)
+                return true;
+
 
             result = CheckNegativeValue(freeMembers);
 
@@ -53,6 +57,36 @@ namespace SImpleks
 
             return false;
         }
+
+        private int CheckNegativeLimits(Fraction[,] limits, Fraction[] freeMembers)
+        {
+
+            bool isNegative = false;
+
+            for (int i = 0; i < limits.GetLength(0); i++)
+            {
+                if (freeMembers[i] < Fraction.zero)
+                {
+                    isNegative = false;
+                    for (int j = 0; j < limits.GetLength(1); j++)
+                    {
+                        if (limits[i, j] < Fraction.zero)
+                        {
+                            isNegative = true;
+                            break;
+
+                        }
+                    }
+
+                }
+            }
+
+            if (isNegative == false)
+                return 2;
+
+            return 0;
+        }
+
 
         private int CheckNegativeValue(Fraction[] freeMembers)
         {
@@ -87,6 +121,8 @@ namespace SImpleks
             rowIndex = MinNegativeFreeMember(freeMembers);
             columnIndex = MinimumReferenceLimitsToMarks(limits, marks, rowIndex);
 
+            InBasis[rowIndex] = columnIndex;
+
             CalculateTheSystem(ref limits, ref marks, ref freeMembers, rowIndex, columnIndex, ref Fx);
 
         }
@@ -107,7 +143,7 @@ namespace SImpleks
 
             for (int i = 0; i < marks.Length; i++)
             {
-                if (marks[i] < Fraction.zero && limits[rowIndex, i] < Fraction.zero)
+                if (marks[i] <= Fraction.zero && limits[rowIndex, i] < Fraction.zero)
                 {
                     divider = marks[i] / limits[rowIndex, i];
                     if (divider < min)
